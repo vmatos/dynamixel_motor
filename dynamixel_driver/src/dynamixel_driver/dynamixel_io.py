@@ -952,28 +952,30 @@ class DynamixelIO(object):
         global exception
         exception = None
         ex_message = '[servo #%d on %s@%sbps]: %s failed' % (servo_id, self.ser.port, self.ser.baudrate, command_failed)
-
-        if not error_code & DXL_OVERHEATING_ERROR == 0:
-            msg = 'Overheating Error ' + ex_message
-            exception = FatalErrorCodeError(msg, error_code)
-        if not error_code & DXL_OVERLOAD_ERROR == 0:
-            msg = 'Overload Error ' + ex_message
-            exception = FatalErrorCodeError(msg, error_code)
-        if not error_code & DXL_INPUT_VOLTAGE_ERROR == 0:
-            msg = 'Input Voltage Error ' + ex_message
-            exception = NonfatalErrorCodeError(msg, error_code)
-        if not error_code & DXL_ANGLE_LIMIT_ERROR == 0:
-            msg = 'Angle Limit Error ' + ex_message
-            exception = NonfatalErrorCodeError(msg, error_code)
-        if not error_code & DXL_RANGE_ERROR == 0:
-            msg = 'Range Error ' + ex_message
-            exception = NonfatalErrorCodeError(msg, error_code)
-        if not error_code & DXL_CHECKSUM_ERROR == 0:
-            msg = 'Checksum Error ' + ex_message
-            exception = NonfatalErrorCodeError(msg, error_code)
-        if not error_code & DXL_INSTRUCTION_ERROR == 0:
-            msg = 'Instruction Error ' + ex_message
-            exception = NonfatalErrorCodeError(msg, error_code)
+        try:
+          if not error_code & DXL_OVERHEATING_ERROR == 0:
+              msg = 'Overheating Error ' + ex_message
+              exception = FatalErrorCodeError(msg, error_code)
+          if not error_code & DXL_OVERLOAD_ERROR == 0:
+              msg = 'Overload Error ' + ex_message
+              exception = FatalErrorCodeError(msg, error_code)
+          if not error_code & DXL_INPUT_VOLTAGE_ERROR == 0:
+              msg = 'Input Voltage Error ' + ex_message
+              exception = NonfatalErrorCodeError(msg, error_code)
+          if not error_code & DXL_ANGLE_LIMIT_ERROR == 0:
+              msg = 'Angle Limit Error ' + ex_message
+              exception = NonfatalErrorCodeError(msg, error_code)
+          if not error_code & DXL_RANGE_ERROR == 0:
+              msg = 'Range Error ' + ex_message
+              exception = NonfatalErrorCodeError(msg, error_code)
+          if not error_code & DXL_CHECKSUM_ERROR == 0:
+              msg = 'Checksum Error ' + ex_message
+              exception = NonfatalErrorCodeError(msg, error_code)
+          if not error_code & DXL_INSTRUCTION_ERROR == 0:
+              msg = 'Instruction Error ' + ex_message
+              exception = NonfatalErrorCodeError(msg, error_code)
+        except:
+          pass
 
 class SerialOpenError(Exception):
     def __init__(self, port, baud):
